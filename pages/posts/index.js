@@ -1,10 +1,27 @@
+import PostsItem from "@/components/PostsItem"
+import domain from "@/utils/config"
+import axios from "axios"
 
+export default function Index({ postData }) {
 
-export default function Index() {
+  const posts = postData.map((post) => {
+    return <PostsItem post = { post } />
+  })
 
   return (
     <>
-      <h1>Index Posts</h1>
+      { posts }
     </>
   )
+}
+
+export const getStaticProps = async () => {
+  try {
+    const response = await axios.get(`${domain}/posts`)
+    return {
+      props: { postData: response.data}
+    }
+  } catch (error) {
+      console.log("err: ", error);
+  }
 }

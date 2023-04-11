@@ -1,3 +1,5 @@
+import domain from "@/utils/config"
+import axios from "axios"
 import { useState } from "react"
 
 export default function AddPost() {
@@ -6,13 +8,19 @@ export default function AddPost() {
     const [imageUrl, setImageUrl] = useState("")
     const [details, setDetails] = useState("")
 
-    const addPost = () => {
+    const addPost = async () => {
         const post = {
             title,
             imageUrl,
             details
         }
         console.log(post);
+        try {
+            await axios.post(`${domain}/posts`, post)
+            alert('post added successfully')
+        } catch (error) {
+            console.log("err: ", error);
+        }
     }
 
     return (
